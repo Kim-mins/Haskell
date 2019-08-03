@@ -96,8 +96,8 @@ main =
 
   -- Currying
   add x y = x + y
-  let add3 = add 3 -- x = 3 + y
-  add3 4 -- 7
+  let addThreeto = add 3 -- x = 3 + y
+  addThreeto 4 -- 7
 
   -- Polymorphic type
   {-
@@ -115,10 +115,10 @@ main =
 
     polymorphic function이 특정 타입에 제한 되어있는 것을 overloaded되었다고 부름
     ex) sum :: Num => [a] -> a
-    sum은 string에 대해서는 못 씀. Int나 Float에 대해서만 가능. --> 'Num =>'의 의미.
+    sum은 string에 대해서는 못 씀. Int나 Float에 대해서만 가능. --> 'Num =>'의 의미. --> sum이 Num이라는 타입 클래스에 의해 제한 됨 --> oveloaded
 
     Overloading에 사용할 수 있는 다양한 타입 클래스.
-    :t (<) -- Ordered types / 순서가 있는 타입에만 사용 가능
+    :t (<) -- Ordered types / 순서가 있는 타입에만 사용 가능 (대소 비교가 가능해야 함)
       (<) :: Ord a => a -> a -> Bool
     :t (==) -- Equality types / 같은 걸 비교할 수 있을 때 사용 가능
       (==) :: Eq a => a -> a -> Bool
@@ -135,7 +135,6 @@ main =
   {-
     Eq는 해당 클래스가 비교할 수 있음을, Ord는 순서가 있음을 나타냄
     Bool, Char, String, Int, Integer, Float, Tuple, List는 모두 Ord와 Eq 클래스의 인스턴스들.
-    하스켈에서 not equal은 /=
     (>), (>=), (<), (<=), max, min 등이 Ord 클래스의 인스턴스에 대해 적용할 수 있는 함수. --> String, Tuple, List는 사전 순에 의해 비교
   -}
 
@@ -194,7 +193,7 @@ main =
     True && b = b
     False && _ = False
 
-    Bool 타입의 변수
+    b는 Bool 타입의 변수
   -}
 
   -- List Patterns
@@ -213,6 +212,7 @@ main =
     \를 통해 람다를 표시.
     ex)
       \x -> x + 1
+      \x y -> x + y -- x, y의 2개의 parameter를 받음
 
     왜 람다?
     1) currying을 통해 정의된 함수를 좀 더 의미있게 표현 가능

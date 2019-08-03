@@ -43,6 +43,8 @@ main =
     
     pairs [] = []
     pairs xs = zip xs (tail xs)
+    ex) 
+      pairs [1, 2, 3] -- [(1, 2), (2, 3), (3, 4)]
 
     sorted :: Ord a => [a] -> Bool
     sorted xs = and [x <= y | (x, y) <- pairs xs] -- and는 리스트의 모든 Bool 값을 and연산한 결과를 줌
@@ -78,6 +80,21 @@ main =
 
     int2let :: Int -> Char
     int2let n = chr(n + ord 'a')  -- chr 함수는 그 반대
+
+    주어진 소문자 알파벳을 n번 이동시키는 shift 함수
+    shift :: Int -> Char -> Char
+    shift n c | isLower c = int2let((let2int c + n) `mod` 26)
+              | otherwise = c
+  
+    shift (-1) 'a' -- 'z'
+    shift (3) 'a' -- 'd'
+
+    encode :: Int -> String -> String
+    encode n cs = [shift n c | c <- cs]
+
+    encode 1 "abc" -- bcd
+    encode 3 "haskell is fun" -- "kdvnhoo lv ixq"
+    encode (-3) "kdvnhoo lv ixq" -- "haskell is fun"
   -}
 
   
