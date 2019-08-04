@@ -78,6 +78,8 @@ main =
     Bool: False, True
     Char은 문자 하나.
     String은 Char의 리스트. --> [Char]
+    String == [Char]
+    '' 은 Char, ""은 [Char]
     Int (== Integer)
     List는 같은 타입으로만 이루어져야 함 --> [False, True, True] :: [Bool]
     [String] == [[Char]]

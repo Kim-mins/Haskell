@@ -236,5 +236,114 @@
 
 -- takeWhile, dropWhile
 {-
+  takeWhile은 predicate가 참인 원소까지만 돌려줌
+  takeWhile :: (a -> Bool) -> [a] -> [a]
+  takeWhile p [] = []
+  takeWhile p (x:xs) | p x = x : takeWhile p xs
+                     | otherwise = []
+  dropWhile은 predicate가 참인 원소까지만 버리고 나머지를 돌려줌
+  dropWhile :: (a -> Bool) -> [a] -> [a]
+  dropWhile p [] = []
+  dropWhile p (x:xs) | p x = dropWhile p xs
+                     | otherwise = (x:xs)
+-}
+
+-- church Numerals
+{-
+  z: zero
+  s: successor function (s :: Int -> Int)
+
+  zero = \s z -> z
+  one = \s z -> s z
+  two = \s z -> s (s z)
+
+  -- same as
+  two = \s z -> (s . s) z
+
+  -- remove z
+  two = \s -> s . s
+
+  -- church to int
+  c2i x = x (+1) 0
+
+  c2i zero -- 0
+  c2i one -- 1
+  c2i two -- 2
+
+  -- *의 개수로 숫자를 정의한다고 하면..
+  c2s x = x ('*' :) ''
+
+  c2s zero -- ""
+  c2s one -- "*"
+  c2s two -- "**"
+
+  x' = c2i x
+  y' = c2i y
+  라고할 때,
+  x' + y' = c2i (add x y)
   
+  왜?
+  x' + y'
+  = c2i x + c2i y
+  = x (+1) 0 + c2i y
+  = x (+1) (c2i y)
+  = x (+1) (y (+1) 0)
+  = (\s z -> x s (y s z)) (+1) 0 -- by beta expension
+
+  so, add는..
+  add x y = \s z -> x s (y s z)
+  c2i (add one two) -- 3
+
+  곱셈은?
+  two = \s -> s . s
+  three = \s -> s . s . s
+  
+  mul = \s z -> x (y s) z
+
+  c2i (mul two five) -- 10
+
+
+  id :: a -> a
+  id = \x -> x
+
+  compose :: [a -> a] -> (a -> a)
+  compose = foldr (.) id
+-}
+
+-- String Transmitter
+{-
+  간단한 문자열 전송을 모델링한 코드
+
+  import Data.Char
+
+  type Bit = Int
+
+  bin2int :: [Bit] -> Int
+  bin2int bits = sum [w * b | (w, b) <- zip weights bits]
+    where weights = iterate (*2) 1
+  -- or
+  -- bin2int bits = foldr (\x acc -> x + acc * 2) 0
+
+  int2bin :: Int -> [Bit]
+  int2bin 0 = []
+  int2bin n = n `mod` 2 : int2bin(n `div` 2)
+
+  make8 :: [Bit] -> [Bit]
+  make8 bits = take 8 (bits ++ repeat 0)
+
+  encode :: String -> [Bit]
+  encode = concat . map (make8 . int2bin . ord)
+
+  chop8 :: [Bit] -> [[Bit]]
+  chop8 [] = []
+  chop8 bits = take 8 bits : chop8 (drop 8 bits)
+
+  decode :: [Bit] -> String
+  decode = map (chr . bin2int) . chop8
+
+  channel :: [Bit] -> [Bit]
+  channel = id
+
+  transmit :: String -> String
+  transmit = decode . channel . encode
 -}
