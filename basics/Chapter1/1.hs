@@ -127,9 +127,9 @@ main =
     :t (+) -- Numeric types / 숫자일 경우에만 사용 가능
       (+) :: Num a => a -> a -> a
 
-    palindrom xs = reverse xs == xs
-    :t palindrom
-    palindrom :: Eq a => [a] -> Bool
+    palindrome xs = reverse xs == xs
+    :t palindrome
+    --> palindrome :: Eq a => [a] -> Bool
 
   -}
 
@@ -206,7 +206,7 @@ main =
       head (x:_) = x
       tail (_:xs) = xs
 
-      함수의 우선순위가 높으므로, head x:_로 하면 (head x):_가 됨..
+    함수의 우선순위가 높으므로, head x:_로 하면 (head x):_가 됨..
   -}
   
   -- Lambda Expression

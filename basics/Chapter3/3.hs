@@ -20,7 +20,7 @@
   위와 같은 factorial 함수는 n이 매우 클 경우 마지막 단계에서 연산의 길이가 매우 길어짐
   --> stack이 많이 생김
 
-  So, tail recurtion optimization
+  So, tail recursion optimization
   필요. --> 이따 배움..
 -}
 
@@ -73,7 +73,7 @@
     -- 짝수, 홀수 번 째 원소를 돌려주는 함수
     evens :: [Int] -> [Int]
     evens [] = []
-    evens (x:xs ) = x : odds xs
+    evens (x:xs) = x : odds xs
     odds :: [Int] -> [Int]
     odds [] = []
     odds (x:xs) = even xs
@@ -136,7 +136,7 @@
     twice :: (a -> a) -> a -> a
     twice f x = f (f x)
 
-  이런 Higher-order function(고차함수)가 언제 유용?
+  이런 Higher-order function(고차함수)이 언제 유용?
     1. Common programming idioms can be encoded as functions within the language itself.
     2. Domain specific languages can be defined as collections of higher-order functions.
     3. Algebraic properties of higher-order functions can be used to reason about programs.
@@ -163,7 +163,7 @@
 {-
   f [] = v
   f (x:xs) = x pred f xs
-  --> 빈 원소면 특정 값 v를 주고, 아니라면 x에 pred를 적용하고 나무지 tail xs에는 f를 적용
+  --> 빈 원소면 특정 값 v를 주고, 아니라면 x에 pred를 적용하고 나머지 tail xs에는 f를 적용
 
   -- v = 0, pred = +
   sum [] = 0
@@ -186,7 +186,7 @@
   foldr의 정의?
   foldr :: (a -> b -> b) -> b -> [a] -> b
   foldr f v [] = v
-  foldr f v (x:xs) = f x (foldr f v xs)
+  foldr f v (x:xs) = f x (foldr f v xs) -- f의 인자로 2개를 줌
 
   length도 foldr로 정의 가능
   length = foldr (\_ n -> n + 1) 0  -- \_ n은 2개의 인자를 받는 lambda 함수
@@ -223,7 +223,7 @@
   all p xs = and [p x | x <- xs]
   -- same as
   all :: (a -> Bool) -> [a] -> Bool
-  all p xs = foldr (\x acc -> px && acc) True xs
+  all p xs = foldr (\x acc -> p x && acc) True xs
 
 
   import Data.Char
