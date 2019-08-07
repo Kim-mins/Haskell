@@ -71,6 +71,13 @@ main =
   snd (1, "Hello") -- "Hello"
   fst (snd (1, (2, 3))) -- 2
 
+  -- if then else
+  {-
+    if x > 100
+      then x
+      else x*2
+  -}
+
   -- Types
   {-
     ghci에서 :t e를 치면 e :: t라고 나옴. e라는 exp가 t라는 타입이라는 뜻
