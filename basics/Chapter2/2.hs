@@ -23,7 +23,7 @@ main =
       --> concat [[1,2,3], [4,5], [6]] --> [1, 2, 3, 4, 5, 6]
   -}
 
-  -- Guards
+  -- Guards (filtering)
   {-
     generator에서 변수를 걸러내기 위해 guards를 사용
     ex)
@@ -31,6 +31,18 @@ main =
       factors n = [x | x <- [1..n], n `mod` x == 0] -- 약수 구하기
       prime n = factors n == [1, n]
       primes n = [x | x <- [2..n], prime x]
+    
+    여러 개 사용 가능
+    ex)
+      [ x | x <- [10..20], x /= 13, x /= 15, x /= 19 
+      --> [10,11,12,14,16,17,18,20]  
+
+    length` xs = sum [1 | _ <- xs]
+    --> length를 구하는 함수
+    removeNonUppercase st = [ c | c <- st, c `elem` ['A'..'Z']]
+    --> uppercase가 아닌 알파벳을 없애줌
+    [ [ x | x <- xs, even x ] | xs <- xxs]
+    --> 이중 리스트의 각 요소에 대해 
   -}
   
   -- 여러 함수
