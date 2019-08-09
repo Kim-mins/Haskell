@@ -114,7 +114,8 @@ main =
     String은 Char의 리스트. --> [Char]
     String == [Char]
     '' 은 Char, ""은 [Char]
-    Int (== Integer)
+    Int (== Integer (Int와 다 같은데, Integer는 값의 범위가 정해지지 않았다는 점이 다름.))
+    Float은 소수, Double은 Float보다 2배 정밀도
     List는 같은 타입으로만 이루어져야 함 --> [False, True, True] :: [Bool]
     [String] == [[Char]]
     Tuple은 묶이는 대로 타입을.. --> (False, 'a', True) :: (Bool, Char, Bool) --> 묶이는 애들끼리 타입이 달라도 됨
@@ -172,6 +173,38 @@ main =
     Eq는 해당 클래스가 비교할 수 있음을, Ord는 순서가 있음을 나타냄
     Bool, Char, String, Int, Integer, Float, Tuple, List는 모두 Ord와 Eq 클래스의 인스턴스들.
     (>), (>=), (<), (<=), max, min 등이 Ord 클래스의 인스턴스에 대해 적용할 수 있는 함수. --> String, Tuple, List는 사전 순에 의해 비교
+
+    5 `compare` 3 --> GT (GT or LT or EQ) --> 두 수의 관계를 알려줌
+
+    Enum은 sequential한 order가 있는 type들. --> enumerate 가능
+    --> pred, succ function들 사용 가능.. 이게 젤 중요한 듯
+    ex) 
+      ['a'..'e'] --> ['a', 'b', 'c', 'd', 'e']
+      [LT .. GT] --> [LT, EQ, GT] (띄어쓰기 안하면 오류 남..) LT, EQ, GT의 타입은 Ordering이라는 타입
+      [3 .. 5] --> [3, 4, 5]
+      succ 'B' --> 'C'
+
+    Bounded는 upper, lower bound를 알려줌
+    ex)
+      minBound :: Int --> -2147483648
+      maxBound :: Char --> '\1114111'
+      maxBound :: Bool --> True
+      minBound :: Bool --> False
+      maxBound :: (Bool, Int, Char) --> (True, 2147483647, '\1114111')
+    
+    Num은 숫자라는 뜻의 type class --> 숫자와 같은 연산 가능
+    --> Int, Integer, Float, Double 모두 가짐
+
+    Integral은 Num과 달리 Int, Integer만 가짐
+
+    Floating은 Float과 Double만.
+
+    함수 중 fromIntegral이라는 함수가 있음.
+    :t fromIntegral :: (Integral a, Num b) => a -> b
+    즉, 더 general한 type으로 만들어주는 함수
+    length :: [a] -> Int이므로,
+    length [1, 2, 3, 4] + 3.2하면 오류. So,
+    fromIntegral (length [1, 2, 3, 4]) + 3.2로 하면 good
   -}
 
   -- Showable Type
@@ -185,9 +218,19 @@ main =
   -- Readable Type
   {-
     :t read --> Read a => String -> a
+    
+    read는 우리가 원하는 타입을 줌.
+    ex)
+      read "True" || False --> True (read가 "True"를 읽고 True를 반환해줌)
+      read "8.2" + 3.8 --> 12.0 (read가 "8.2"를 읽고 8.2를 반환해줌)
+      read "5" - 2 --> 3
+      read "[1, 2, 3, 4]" ++ [3] --> [1, 2, 3, 4, 3]
 
-    read "False" :: Bool
-    read "[1, 2, 3]" :: [Int] -- [1, 2, 3]
+      read "4" --> 어떤 타입으로 줘야할 지 모르므로, 오류가 남
+      
+      read "False" :: Bool --> False
+      read "[1, 2, 3]" :: [Int] -- [1, 2, 3]
+      --> 위 두 개 처럼 타입을 명시해주면 잘 return해줌. 오류 안 남
   -}
 
   -- Integral, Fractional, Rational
